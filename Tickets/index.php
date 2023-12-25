@@ -1,3 +1,54 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
+    $filtros = array(
+        $_POST['titulo'] => FILTER_SANITIZE_STRING,
+        $_POST['descripcion'] => FILTER_SANITIZE_STRING,
+        $_POST['prioridad'] => FILTER_SANITIZE_STRING,
+        $_POST['estado'] => FILTER_SANITIZE_STRING,
+        $_POST['cliente'] => FILTER_SANITIZE_STRING,
+        $_POST['agente'] => FILTER_SANITIZE_STRING
+    );
+    header("Location: index.html");
+
+    $datosFiltrados = filter_input_array(INPUT_POST, $filtros);
+
+    if (in_array(false, $datosFiltrados, true)) {
+        echo "Error en los datos del formulario.";
+    } else {
+        // Verificar que todos los campos requeridos estén presentes
+        $camposRequeridos = array('titulo', 'descripcion', 'prioridad', 'estado', 'cliente', 'agente');
+        $errores = array();
+
+        foreach ($camposRequeridos as $campo) {
+            if (!isset($datosFiltrados[$campo]) || empty($datosFiltrados[$campo])) {
+                $errores[] = "El campo '$campo' es obligatorio.";
+            }
+        }
+
+        if (!empty($errores)) {
+            echo "Errores encontrados:<br>";
+            foreach ($errores as $error) {
+                echo "- $error<br>";
+            }
+        } else {
+            include 'php/utilidad.php';
+
+            if (crearTicket(
+                            $datosFiltrados['titulo'],
+                            $datosFiltrados['descripcion'],
+                            $datosFiltrados['prioridad'],
+                            $datosFiltrados['estado'],
+                            $datosFiltrados['cliente'],
+                            $datosFiltrados['agente']
+                    )) {
+                echo "Ticket creado con éxito.";
+            } else {
+                echo "Error al crear el ticket.";
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -10,10 +61,10 @@
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
         <script src="js/tickets.js"></script>
     </head>
-    <body>
+    <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
         <div id="tickets-container">
             <h1>Gesti&oacute;n de Tickets</h1>
-            <form id="ticket-form">
+            <form id="ticket-form" action="index.php" method="post">
                 <label for="titulo">T&iacute;tulo:</label>
                 <input type="text" id="titulo" name="titulo" required>
 
@@ -40,13 +91,10 @@
                 <label for="agente">Agente asignado:</label>
                 <input type="text" id="agente" name="agente" required>
 
-                <label for="fecha">Fecha:</label>
-                <input type="date" id="fecha" name="fecha" required>
-
                 <button type="submit" id="crear-ticket">Crear Ticket</button>
             </form>
 
-            <button id="ordenar-nombre">Ordenar por Nombre</button>
+            <button id="ordenar-titulo">Ordenar por T&iacute;tulo</button>
             <button id="ordenar-prioridad">Ordenar por Prioridad</button>
             <button id="agrupar-cliente">Agrupar por Cliente</button>
             <button id="agrupar-agente">Agrupar por Agente</button>
@@ -60,19 +108,20 @@
                 echo '<ul id="ticket-list">';
                 foreach ($listaTickets as $ticket) {
                     echo '<li class="ticket-item">';
-                    echo '<h3>' . $ticket['nombre'] . '</h3>';
+                    echo '<h3>' . $ticket['titulo'] . '</h3>';
                     echo '<p>Descripci&oacute;n: ' . $ticket['descripcion'] . '</p>';
                     echo '<p>Prioridad: ' . $ticket['prioridad'] . '</p>';
                     echo '<p>Estado: ' . $ticket['estado'] . '</p>';
                     echo '<p>Cliente: ' . $ticket['cliente'] . '</p>';
                     echo '<p>Agente asignado: ' . $ticket['agente'] . '</p>';
+                    echo '<p>Fecha: ' . $ticket['fecha'] . '</p>';
                     echo '<button class="edit-button">Editar</button>';
                     echo '<button class="delete-button">Eliminar</button>';
                     echo '</li>';
                 }
                 echo '</ul>';
             } else {
-                echo 'No hay tickets';
+                echo '<p>No hay tickets</p>';
             }
             ?>
         </div>

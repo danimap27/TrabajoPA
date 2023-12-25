@@ -128,15 +128,6 @@ button:hover {
     margin-bottom: 10px;
 }
 
-input[type="date"] {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease-in-out;
-}
 .edit-button,
 .delete-button {
     background-color: #dc3545;
