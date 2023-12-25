@@ -5,9 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gesti&oacute;n de Tickets</title>
         <link rel="stylesheet" href="scss/style.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
         <script src="js/tickets.js"></script>
     </head>
-    <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
+    <body>
         <div id="tickets-container">
             <h1>Gesti&oacute;n de Tickets</h1>
             <form id="ticket-form">
@@ -42,18 +45,36 @@
 
                 <button type="submit" id="crear-ticket">Crear Ticket</button>
             </form>
-            <ul id="ticket-list">
-                <li class="ticket-item">
-                    <h3>Ticket #1</h3>
-                    <p>Descripci&oacute;n del ticket #1.</p>
-                    <p>Prioridad: Alta</p>
-                    <p>Estado: Abierto</p>
-                    <p>Cliente: Cliente A</p>
-                    <p>Agente asignado: Agente 1</p>
-                    <button class="edit-button">Editar</button>
-                    <button class="delete-button">Eliminar</button>
-                </li>
-            </ul>
+
+            <button id="ordenar-nombre">Ordenar por Nombre</button>
+            <button id="ordenar-prioridad">Ordenar por Prioridad</button>
+            <button id="agrupar-cliente">Agrupar por Cliente</button>
+            <button id="agrupar-agente">Agrupar por Agente</button>
+
+            <?php
+            include 'php/utilidad.php';
+
+            $listaTickets = obtenerListaTickets();
+
+            if (!empty($listaTickets)) {
+                echo '<ul id="ticket-list">';
+                foreach ($listaTickets as $ticket) {
+                    echo '<li class="ticket-item">';
+                    echo '<h3>' . $ticket['nombre'] . '</h3>';
+                    echo '<p>Descripci&oacute;n: ' . $ticket['descripcion'] . '</p>';
+                    echo '<p>Prioridad: ' . $ticket['prioridad'] . '</p>';
+                    echo '<p>Estado: ' . $ticket['estado'] . '</p>';
+                    echo '<p>Cliente: ' . $ticket['cliente'] . '</p>';
+                    echo '<p>Agente asignado: ' . $ticket['agente'] . '</p>';
+                    echo '<button class="edit-button">Editar</button>';
+                    echo '<button class="delete-button">Eliminar</button>';
+                    echo '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo 'No hay tickets';
+            }
+            ?>
         </div>
     </body>
 </html>

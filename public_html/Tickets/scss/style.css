@@ -51,6 +51,22 @@ label {
     font-weight: bold;
 }
 
+button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 input[type="text"],
 textarea,
 select {
