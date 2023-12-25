@@ -1,57 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Tickets</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/tickets.js"></script>
-</head>
-<body>
-    <div id="tickets-container">
-        <h1>Gestión de Tickets</h1>
-        <form id="ticket-form">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gesti&oacute;n de Tickets</title>
+        <link rel="stylesheet" href="scss/style.css">
+        <script src="js/tickets.js"></script>
+    </head>
+    <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
+        <div id="tickets-container">
+            <h1>Gesti&oacute;n de Tickets</h1>
+            <form id="ticket-form">
+                <label for="titulo">T&iacute;tulo:</label>
+                <input type="text" id="titulo" name="titulo" required>
 
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" required></textarea>
+                <label for="descripcion">Descripci&oacute;n:</label>
+                <textarea id="descripcion" name="descripcion" required></textarea>
 
-            <label for="prioridad">Prioridad:</label>
-            <select id="prioridad" name="prioridad">
-                <option value="alta">Alta</option>
-                <option value="media">Media</option>
-                <option value="baja">Baja</option>
-            </select>
+                <label for="prioridad">Prioridad:</label>
+                <select id="prioridad" name="prioridad">
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
 
-            <label for="estado">Estado:</label>
-            <select id="estado" name="estado">
-                <option value="abierto">Abierto</option>
-                <option value="en_progreso">En progreso</option>
-                <option value="cerrado">Cerrado</option>
-            </select>
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado">
+                    <option value="abierto">Abierto</option>
+                    <option value="en_progreso">En progreso</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
 
-            <label for="cliente">Cliente:</label>
-            <input type="text" id="cliente" name="cliente" required>
+                <label for="cliente">Cliente:</label>
+                <input type="text" id="cliente" name="cliente" required>
 
-            <label for="agente">Agente asignado:</label>
-            <input type="text" id="agente" name="agente" required>
+                <label for="agente">Agente asignado:</label>
+                <input type="text" id="agente" name="agente" required>
 
-            <button type="submit">Crear Ticket</button>
-        </form>
-        <ul id="ticket-list">
-            <li class="ticket-item">
-                <h3>Ticket #1</h3>
-                <p>Descripción del ticket #1.</p>
-                <p>Prioridad: Alta</p>
-                <p>Estado: Abierto</p>
-                <p>Cliente: Cliente A</p>
-                <p>Agente asignado: Agente 1</p>
-                <button class="edit-button">Editar</button>
-                <button class="delete-button">Eliminar</button>
-            </li>
-        </ul>
-    </div>
-</body>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required>
+
+                <button type="submit" id="crear-ticket">Crear Ticket</button>
+            </form>
+            <ul id="ticket-list">
+                <li class="ticket-item">
+                    <h3>Ticket #1</h3>
+                    <p>Descripci&oacute;n del ticket #1.</p>
+                    <p>Prioridad: Alta</p>
+                    <p>Estado: Abierto</p>
+                    <p>Cliente: Cliente A</p>
+                    <p>Agente asignado: Agente 1</p>
+                    <button class="edit-button">Editar</button>
+                    <button class="delete-button">Eliminar</button>
+                </li>
+            </ul>
+        </div>
+    </body>
 </html>
+
 
