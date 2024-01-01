@@ -2,17 +2,21 @@ function submitForm() {
     var form = document.getElementById("loginForm");
     var errorMessage = document.getElementById("error-message");
 
-    errorMessage.innerHTML = '';
+    // Limpia el contenido actual del elemento de mensaje de error
+    while (errorMessage.firstChild) {
+        errorMessage.removeChild(errorMessage.firstChild);
+    }
 
+    // Verifica y agrega mensajes de error según sea necesario
     if (form.email.value === '' || !isValidEmail(form.email.value)) {
-        errorMessage.innerHTML += '<p style="color: red; font-weight: bold">El usuario no es válido.</p>';
+        errorMessage.appendChild(document.createTextNode('El usuario no es válido.'));
     }
 
     if (form.password.value === '') {
-        errorMessage.innerHTML += '<p style="color: red; font-weight: bold">La contraseña debe rellenarse.</p>';
+        errorMessage.appendChild(document.createTextNode('La contraseña debe rellenarse.'));
     }
 
-    if (errorMessage.innerHTML === '') {
+    if (errorMessage.childNodes.length === 0) {
         fetch('login.php', {
             method: 'POST',
             headers: {
@@ -21,32 +25,18 @@ function submitForm() {
             body: new URLSearchParams(new FormData(form)),
         })
         .then(response => response.json())
-        .then(errors => {
-            errorMessage.innerHTML = errors.join('');
-
-            if (errors.length === 0) {
-                window.location.href = determineDashboardURL(); // Llama a la función para determinar la URL del dashboard
+        .then(data => {
+            if (data.success) {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            } else {
+                // Agrega mensajes de error al elemento de mensaje de error
+                data.errors.forEach(error => {
+                    errorMessage.appendChild(document.createTextNode(error));
+                });
             }
         })
         .catch(error => console.error('Error:', error));
-    }
-}
-
-function isValidEmail(email) {
-    var pattern = /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i;
-    return pattern.test(email);
-}
-
-function determineDashboardURL() {
-    var userType = document.getElementById("loginForm").elements["type"].value;
-    switch (userType) {
-        case "administrador":
-            return "admin_dashboard.php";
-        case "cliente":
-            return "cliente_dashboard.php";
-        case "agente":
-            return "agente_dashboard.php";
-        default:
-            return "unknown_dashboard.php";
     }
 }

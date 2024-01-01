@@ -73,24 +73,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
 
                 <label for="prioridad">Prioridad:</label>
                 <select id="prioridad" name="prioridad">
-                    <option value="3">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="1">Baja</option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
                 </select>
 
                 <label for="estado">Estado:</label>
                 <select id="estado" name="estado">
-                    <option value="3">Abierto</option>
-                    <option value="2">En progreso</option>
-                    <option value="1">Cerrado</option>
+                    <option value="abierto">Abierto</option>
+                    <option value="en_progreso">En progreso</option>
+                    <option value="cerrado">Cerrado</option>
                 </select>
 
                 <label for="cliente">Cliente:</label>
-                <input type="number" id="cliente" name="cliente" required>
+                <input type="text" id="cliente" name="cliente" required>
 
                 <label for="agente">Agente asignado:</label>
-                <input type="number" id="agente" name="agente" required>
-        
+                <input type="text" id="agente" name="agente" required>
+
                 <button type="submit" id="crear-ticket">Crear Ticket</button>
             </form>
 
@@ -110,9 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
                     echo '<li class="ticket-item">';
                     echo '<h3>' . $ticket['titulo'] . '</h3>';
                     echo '<p>Descripci&oacute;n: ' . $ticket['descripcion'] . '</p>';
+                    //Poner el nombre haciendo otra consulta
                     echo '<p>Prioridad: ' . $ticket['prioridad'] . '</p>';
                     echo '<p>Estado: ' . $ticket['estado'] . '</p>';
-                    //Poner el nombre haciendo otra consulta
                     echo '<p>Cliente: ' . $ticket['cliente'] . '</p>';
                     echo '<p>Agente asignado: ' . $ticket['agente'] . '</p>';
                     echo '<p>Fecha: ' . $ticket['fecha'] . '</p>';

@@ -1,5 +1,7 @@
 <?php
 session_start();
+$response = array();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $error = array();
 
@@ -7,11 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error[] = '<p style="color: red; font-weight: bold">El usuario no es válido.</p>';
+        $error[] = 'El usuario no es válido.';
     }
 
     if (empty($password)) {
-        $error[] = '<p style="color: red; font-weight: bold">La contraseña debe rellenarse.</p>';
+        $error[] = 'La contraseña debe rellenarse.';
     }
 
     if (empty($error)) {
@@ -25,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Error de conexión: " . $conn->connect_error);
         }
 
-        $sql = "SELECT idUsuario, tipo, contrasenia_hash FROM usuario WHERE email = '$email'";
+        $sql = "SELECT idUsuario, tipo, contrasenia_hash FROM usuario WHERE correo = '$email'";
         $result = mysqli_query($conn, $sql);
         $conn->close();
 
@@ -34,26 +36,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (password_verify($password, $row["contrasenia_hash"])) {
                 $_SESSION["email"] = $email;
-
-                if ($row["tipo"] === "administrador") {
-                    header("Location: adminView.html");
-                    exit();
-                } elseif ($row["tipo"] === "cliente") {
-                    //TODO
-                } elseif ($row["tipo"] === "agente") {
-                    //TODO
-                } else {
-                    //TODO
-                }
-                exit();
+                $response['success'] = true;
+                $response['redirect'] = ($row["tipo"] === "administrador") ? 'adminView.html' : '';
+                exit(json_encode($response));
             } else {
-                $error[] = '<p style="color: red; font-weight: bold">La combinación de usuario y contraseña no es correcta.</p>';
+                $error[] = 'La combinación de usuario y contraseña no es correcta.';
             }
         } else {
-            $error[] = '<p style="color: red; font-weight: bold">Usuario no encontrado.</p>';
+            $error[] = 'Usuario no encontrado.';
         }
     }
+
+    // Agrega los errores a la respuesta
+    $response['success'] = false;
+    $response['errors'] = $error;
+    exit(json_encode($response));
 }
 
-echo json_encode($error);
+// En caso de que alguien acceda directamente a login.php sin un formulario POST
+header("Location: ../login.html");
+exit();
 ?>
+
