@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "soporte";
+$dbname = "sist_gest_tick_sop";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -12,18 +12,18 @@ if ($conn->connect_error) {
 
 function crearTicket($titulo, $descripcion, $prioridad, $estado, $cliente, $agente) {
     global $conn;
-    
-    // Prevenir inyección SQL utilizando declaraciones preparadas
-    $stmt = $conn->prepare("INSERT INTO tickets (titulo, descripcion, prioridad, estado, cliente, agente, fecha) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("sssss", $titulo, $descripcion, $prioridad, $estado, $cliente, $agente);
-    if (!$stmt->execute()) {
-        echo "Error al ejecutar la consulta: " . $stmt->error;
-    }
+
+    $prioridad = filter_var($prioridad, FILTER_VALIDATE_INT);
+    $estado = filter_var($estado, FILTER_VALIDATE_INT);
+
+    $stmt = $conn->prepare("INSERT INTO ticket (nombreTicket, descripcionTicket, prioridad, estado, fk_idCliente, fk_idAgente, fechaRegistro) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("ssiiii", $titulo, $descripcion, $prioridad, $estado, $cliente, $agente);
 
     if ($stmt->execute()) {
         $stmt->close();
         return true;
     } else {
+        echo "Error al ejecutar la consulta: " . $stmt->error;
         $stmt->close();
         return false;
     }
@@ -31,7 +31,7 @@ function crearTicket($titulo, $descripcion, $prioridad, $estado, $cliente, $agen
 
 function obtenerListaTickets() {
     global $conn;
-    $sql = "SELECT * FROM tickets ORDER BY titulo";
+    $sql = "SELECT * FROM ticket ORDER BY nombreTicket";
     $result = $conn->query($sql);
 
     $tickets = [];
@@ -43,5 +43,4 @@ function obtenerListaTickets() {
     }
     return $tickets;
 }
-
 ?>
