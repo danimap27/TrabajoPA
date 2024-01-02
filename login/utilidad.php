@@ -3,7 +3,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $filtros = array(
         $_POST['email'] => FILTER_SANITIZE_STRING,
-        $_POST['password'] => FILTER_SANITIZE_EMAIL
+        $_POST['password'] => FILTER_SANITIZE_STRING
     );
     $result = filter_input_array(INPUT_POST, $filtros);
     if (array_search(false, $result, true)) {
@@ -22,20 +22,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     require 'database.php';
                     $conn = connectToDatabase();
-                    $sql = "SELECT contrasenia_hash FROM usuario WHERE correo = '$email'";
+                    $sql = "SELECT contrasenia_hash, tipo FROM usuario WHERE correo = '$email'";
                     $result = mysqli_query($conn, $sql);
                     $conn->close();
-                    if (mysqli_num_rows($result) > 0) {
-                        $hash = mysqli_fetch_assoc($result)["contrasenia_hash"];
-                        if (password_verify($_POST["password"], $hash)) {
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $hash = $row['contrasenia_hash'];
+                        $tipo = $row['tipo'];
+                        //password_verify($_POST['password'], $hash)
+                        if ($_POST['password'] === $hash) {
                             $_SESSION["email"] = $email;
-                            header("Location: index.php");
+                            if ($tipo === 'Cliente') {
+                                header("Location: ../Tickets/index.php");
+                            } elseif ($tipo === 'Agente') {
+                                header("Location: ../Agente/index.php");
+                            } elseif ($tipo === 'administrador') {
+                                header("Location: ../Admin/index.php");
+                            } else {
+                                header("Location: ../Tickets/index.php");
+                            }
                             exit();
                         } else {
-                            $error[] = '<p style="color: red; font-weight: bold"> La combinación de usuario y contrase&ntilde; no es correcta.</p>';
+                            $error[] = '<p style="color: red; font-weight: bold">La combinación de usuario y contraseña no es correcta.</p>';
                         }
                     } else {
-
+                        $error[] = '<p style="color: red; font-weight: bold">El usuario no existe.</p>';
                     }
                 }
             }

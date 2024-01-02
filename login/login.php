@@ -12,7 +12,7 @@ require 'utilidad.php';
 <body>
     <div class="container">
         <form id="loginForm" action="login.php" method="post">
-            <h2>Login Gesti&oacute;n de Ticketass</h2>
+            <h2>Login Gesti&oacute;n de Tickets</h2>
             <?php
             if (isset($error)) {
                 foreach ($error as $e) {

@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
                     //Poner el nombre haciendo otra consulta
                     echo '<p>Prioridad: ' . $ticket['prioridad'] . '</p>';
                     echo '<p>Estado: ' . $ticket['estado'] . '</p>';
-                    echo '<p>Cliente: ' . $ticket['cliente'] . '</p>';
+                    mostraCliente($ticket['cliente']);
                     echo '<p>Agente asignado: ' . $ticket['agente'] . '</p>';
                     echo '<p>Fecha: ' . $ticket['fecha'] . '</p>';
                     echo '<button class="edit-button">Editar</button>';
