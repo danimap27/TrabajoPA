@@ -1,12 +1,49 @@
 <?php
-session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $filtros = array(
-        $_POST['email'] => FILTER_SANITIZE_STRING,
-        $_POST['password'] => FILTER_SANITIZE_STRING
-    );
-    $result = filter_input_array(INPUT_POST, $filtros);
-    if (array_search(false, $result, true)) {
+require 'database.php';
+function registerUser($email, $password, $userType, $firstName, $lastName)
+{
+    $error = array();
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error[] = '<p style="color: red; font-weight: bold">El correo electr&oacute;nico no es v&aacute;lido.</p>';
+    }
+
+    if (strlen($password) < 6) {
+        $error[] = '<p style="color: red; font-weight: bold">La contrase&ntilde;a debe tener al menos 6 caracteres.</p>';
+    }
+
+    if ($userType !== 'agente' && $userType !== 'cliente') {
+        $error[] = '<p style="color: red; font-weight: bold">El tipo de usuario no es v&aacute;lido.</p>';
+    }
+
+    if (!preg_match("/^[a-zA-Z]+$/", $firstName)) {
+        $error[] = '<p style="color: red; font-weight: bold">El nombre no es v&aacute;lido.</p>';
+    }
+
+    if (!preg_match("/^[a-zA-Z]+$/", $lastName)) {
+        $error[] = '<p style="color: red; font-weight: bold">El apellido no es v&aacute;lido.</p>';
+    }
+
+    if (empty($error)) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $conn = connectToDatabase();
+        if (false) {
+            //TODO Insertar en base de datos
+        } else {
+            $error[] = '<p style="color: red; font-weight: bold">Error al registrar el usuario. Por favor, int&eacute;ntalo de nuevo.</p>';
+        }
+
+        $conn->close();
+    }
+
+    return $error;
+}
+
+function loginUser($email, $password)
+{
+    $error = array();
+    if (!$email || !$password) {
         $error[] = '<p style="color: red; font-weight: bold" > Te impido una SQLInjection.</p>';
     } else {
         if (!isset($_POST['email']) || $_POST['email'] == '') {
@@ -20,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (!isset($_POST['password']) || $_POST['password'] == '') {
                     $error[] = '<p style="color: red; font-weight: bold"> La contrase&ntilde; debe rellenarse.</p>';
                 } else {
-                    require 'database.php';
                     $conn = connectToDatabase();
                     $sql = "SELECT contrasenia_hash, tipo FROM usuario WHERE correo = '$email'";
                     $result = mysqli_query($conn, $sql);
@@ -52,5 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+    return $error;
 }
 ?>
