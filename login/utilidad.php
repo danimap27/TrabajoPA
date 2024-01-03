@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         //password_verify($_POST['password'], $hash)
                         if ($_POST['password'] === $hash) {
                             $_SESSION["email"] = $email;
-                            if ($tipo === 'Cliente') {
+                            if ($tipo === 'cliente') {
                                 header("Location: ../Tickets/index.php");
-                            } elseif ($tipo === 'Agente') {
+                            } elseif ($tipo === 'agente') {
                                 header("Location: ../Agente/index.php");
                             } elseif ($tipo === 'administrador') {
                                 header("Location: ../Admin/index.php");
