@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-01-2024 a las 10:54:39
+-- Tiempo de generación: 05-01-2024 a las 13:10:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,8 +32,7 @@ USE `sist_gest_tick_sop`;
 CREATE TABLE `agente` (
   `idAgente` int(8) NOT NULL,
   `nombreAgente` varchar(255) NOT NULL,
-  `apellidosAgente` varchar(255) NOT NULL,
-  `clave` text NOT NULL
+  `apellidosAgente` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -46,8 +45,7 @@ CREATE TABLE `cliente` (
   `idCliente` int(8) NOT NULL,
   `nombreCliente` varchar(255) NOT NULL,
   `apellidoCliente` varchar(255) NOT NULL,
-  `codigoPostal` varchar(5) NOT NULL,
-  `clave` text NOT NULL
+  `codigoPostal` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -139,7 +137,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `idTicket` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTicket` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
