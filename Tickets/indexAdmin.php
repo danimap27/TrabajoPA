@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
         $_POST['cliente'] => FILTER_SANITIZE_STRING,
         $_POST['agente'] => FILTER_SANITIZE_STRING
     );
-    header("Location: index.html");
+    header("Location: indexAdmin.php");
 
     $datosFiltrados = filter_input_array(INPUT_POST, $filtros);
 
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gesti&oacute;n de Tickets</title>
-        <link rel="stylesheet" href="scss/style.css">
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
     <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
         <div id="tickets-container">
             <h1>Gesti&oacute;n de Tickets</h1>
-            <form id="ticket-form" action="index.php" method="post">
+            <form id="ticket-form" action="indexAdmin.php" method="post">
                 <label for="titulo">T&iacute;tulo:</label>
                 <input type="text" id="titulo" name="titulo" required>
 
@@ -113,8 +113,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
                     //Poner el nombre haciendo otra consulta
                     echo '<p>Prioridad: ' . $ticket['prioridad'] . '</p>';
                     echo '<p>Estado: ' . $ticket['estado'] . '</p>';
-                    mostraCliente($ticket['cliente']);
-                    echo '<p>Agente asignado: ' . $ticket['agente'] . '</p>';
+                    //mostraCliente($ticket['cliente']);
+                    //mostraAgente($ticket['agente']);
                     echo '<p>Fecha: ' . $ticket['fecha'] . '</p>';
                     echo '<button class="edit-button">Editar</button>';
                     echo '<button class="delete-button">Eliminar</button>';
