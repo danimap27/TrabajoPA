@@ -43,7 +43,8 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
             }
 
             if ($conn->query($sql)) {
-                $lastInsertedId = $conn->insert_id;
+                //$lastInsertedId = $conn->insert_id;
+                $lastInsertedId = 1;
                 $sql = "INSERT INTO usuario (correo, contrasenia_hash, tipo, idCorrespondiente) VALUES ('$email', '$hashedPassword', '$userType', '$lastInsertedId')";
                 $conn->query($sql);
                 $error[] = '<p style="color: green; font-weight: bold">Usuario registrado correctamente.</p>';
