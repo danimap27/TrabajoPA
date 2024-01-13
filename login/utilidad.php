@@ -28,11 +28,22 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $conn = connectToDatabase();
-        if (false) {
-            //TODO Insertar en base de datos
+
+        if ($userType === 'agente') {
+            $sql = "INSERT INTO agente (nombreAgente, apellidosAgente) VALUES ('$firstName', '$lastName')";
+        } else {
+            $sql = "INSERT INTO cliente (nombre, apellido) VALUES ('$email', '$hashedPassword', 'cliente', '$firstName', '$lastName')";
+        }
+        if ($conn->query($sql)) {
+            //$sql = "SELECT LAST_INSERT_ID() as last_id";
+            //$result = mysqli_query($conn, $sql);
+            $sql = "INSERT INTO usuario (correo, contrasenia_hash, tipo, idCorrespondiente) VALUES ('$email', '$hashedPassword', '$userType', '1')";
+            $conn->query($sql);
+            $error[] = '<p style="color: green; font-weight: bold">Usuario registrado correctamente.</p>';
         } else {
             $error[] = '<p style="color: red; font-weight: bold">Error al registrar el usuario. Por favor, int&eacute;ntalo de nuevo.</p>';
         }
+
 
         $conn->close();
     }
