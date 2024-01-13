@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2024 a las 13:10:21
+-- Tiempo de generación: 13-01-2024 a las 18:22:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -35,6 +35,15 @@ CREATE TABLE `agente` (
   `apellidosAgente` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `agente`
+--
+
+INSERT INTO `agente` (`idAgente`, `nombreAgente`, `apellidosAgente`) VALUES
+(1, 'Pepe', 'Pepito'),
+(2, 'Juan', 'Gome'),
+(3, 'Sergio', 'Ramos');
+
 -- --------------------------------------------------------
 
 --
@@ -45,8 +54,16 @@ CREATE TABLE `cliente` (
   `idCliente` int(8) NOT NULL,
   `nombreCliente` varchar(255) NOT NULL,
   `apellidoCliente` varchar(255) NOT NULL,
-  `codigoPostal` varchar(5) NOT NULL
+  `id_agente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `id_agente`) VALUES
+(1, 'Edu', 'Jimene', NULL),
+(4, 'Edu', 'Jimene', NULL);
 
 -- --------------------------------------------------------
 
@@ -84,7 +101,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `correo`, `contrasenia_hash`, `tipo`, `idCorrespondiente`) VALUES
-(1, 'admin@admin.com', 'admin', 'administrador', NULL);
+(1, 'admin@admin.com', 'admin', 'administrador', NULL),
+(7, 'cliente@cliente.com', '$2y$10$soTdBZqjEYZgC5MdxDff0.4Obd4rQVsgHxZNeT8CndGkPJzUsfrpS', 'cliente', 1);
 
 --
 -- Índices para tablas volcadas
@@ -100,7 +118,8 @@ ALTER TABLE `agente`
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`idCliente`);
+  ADD PRIMARY KEY (`idCliente`),
+  ADD UNIQUE KEY `id_agente` (`id_agente`);
 
 --
 -- Indices de la tabla `ticket`
@@ -125,13 +144,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `agente`
 --
 ALTER TABLE `agente`
-  MODIFY `idAgente` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAgente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCliente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket`

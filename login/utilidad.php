@@ -16,11 +16,11 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
         $error[] = '<p style="color: red; font-weight: bold">El tipo de usuario no es v&aacute;lido.</p>';
     }
 
-    if (!preg_match("/^[a-zA-Z]+$/", $firstName)) {
+    if (!preg_match("/^[a-zA-Z ]+$/", $firstName)) {
         $error[] = '<p style="color: red; font-weight: bold">El nombre no es v&aacute;lido.</p>';
     }
 
-    if (!preg_match("/^[a-zA-Z]+$/", $lastName)) {
+    if (!preg_match("/^[a-zA-Z ]+$/", $lastName)) {
         $error[] = '<p style="color: red; font-weight: bold">El apellido no es v&aacute;lido.</p>';
     }
 
@@ -32,7 +32,7 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
         if ($userType === 'agente') {
             $sql = "INSERT INTO agente (nombreAgente, apellidosAgente) VALUES ('$firstName', '$lastName')";
         } else {
-            $sql = "INSERT INTO cliente (nombre, apellido) VALUES ('$email', '$hashedPassword', 'cliente', '$firstName', '$lastName')";
+            $sql = "INSERT INTO cliente (nombreCliente, apellidoCliente) VALUES ('$firstName', '$lastName')";
         }
         if ($conn->query($sql)) {
             //$sql = "SELECT LAST_INSERT_ID() as last_id";
@@ -49,7 +49,64 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
     }
 
     return $error;
+}function registerUser($email, $password, $userType, $firstName, $lastName)
+{
+    $error = array();
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error[] = '<p style="color: red; font-weight: bold">El correo electr&oacute;nico no es v&aacute;lido.</p>';
+    }
+
+    if (strlen($password) < 6) {
+        $error[] = '<p style="color: red; font-weight: bold">La contrase&ntilde;a debe tener al menos 6 caracteres.</p>';
+    }
+
+    if ($userType !== 'agente' && $userType !== 'cliente') {
+        $error[] = '<p style="color: red; font-weight: bold">El tipo de usuario no es v&aacute;lido.</p>';
+    }
+
+    if (!preg_match("/^[a-zA-Z ]+$/", $firstName)) {
+        $error[] = '<p style="color: red; font-weight: bold">El nombre no es v&aacute;lido.</p>';
+    }
+
+    if (!preg_match("/^[a-zA-Z ]+$/", $lastName)) {
+        $error[] = '<p style="color: red; font-weight: bold">El apellido no es v&aacute;lido.</p>';
+    }
+
+    if (empty($error)) {
+        $conn = connectToDatabase();
+
+        $emailExistsQuery = "SELECT COUNT(*) as count FROM usuario WHERE correo = '$email'";
+        $emailExistsResult = $conn->query($emailExistsQuery);
+        $emailExistsData = $emailExistsResult->fetch_assoc();
+
+        if ($emailExistsData['count'] > 0) {
+            $error[] = '<p style="color: red; font-weight: bold">El correo electr&oacute;nico ya est&aacute; registrado.</p>';
+        } else {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            if ($userType === 'agente') {
+                $sql = "INSERT INTO agente (nombreAgente, apellidosAgente) VALUES ('$firstName', '$lastName')";
+            } else {
+                $sql = "INSERT INTO cliente (nombreCliente, apellidoCliente) VALUES ('$firstName', '$lastName')";
+            }
+
+            if ($conn->query($sql)) {
+                $lastInsertedId = $conn->insert_id;
+                $sql = "INSERT INTO usuario (correo, contrasenia_hash, tipo, idCorrespondiente) VALUES ('$email', '$hashedPassword', '$userType', '$lastInsertedId')";
+                $conn->query($sql);
+                $error[] = '<p style="color: green; font-weight: bold">Usuario registrado correctamente.</p>';
+            } else {
+                $error[] = '<p style="color: red; font-weight: bold">Error al registrar el usuario. Por favor, int&eacute;ntalo de nuevo.</p>';
+            }
+        }
+
+        $conn->close();
+    }
+
+    return $error;
 }
+
 
 function loginUser($email, $password)
 {
