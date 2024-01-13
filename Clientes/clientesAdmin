@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Opciones</title>
+</head>
+<body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
+
+    <h2>Seleccione una opción:</h2>
+
+    <form action="procesar_opcion.php" method="post">
+        <button type="submit" name="opcion" value="dar_de_baja">Dar de baja</button>
+        <button type="submit" name="opcion" value="dar_de_alta">Dar de alta</button>
+        <button type="submit" name="opcion" value="modificar_datos">Modificar datos</button>
+    </form>
+
+</body>
+</html>
