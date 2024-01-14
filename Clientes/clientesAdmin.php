@@ -1,15 +1,15 @@
 <?php
 
 function conectarDB() {
-    $servername = "tu_servidor";
-    $username = "tu_usuario";
-    $password = "tu_contraseña";
-    $dbname = "tu_base_de_datos";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "sist_gest_tick_sop";
 
-    // Crear conexión
+
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Verificar la conexión
+    
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
@@ -20,7 +20,7 @@ function conectarDB() {
 function darBaja($nombre, $apellido, $dni) {
     $conn = conectarDB();
 
-    // Lógica para dar de baja (eliminar) un cliente
+    
     $sql = "DELETE FROM clientes WHERE dni = '$dni'";
     
     if ($conn->query($sql) === TRUE) {
@@ -35,7 +35,7 @@ function darBaja($nombre, $apellido, $dni) {
 function darAlta($nombre, $apellido, $dni) {
     $conn = conectarDB();
 
-    // Lógica para dar de alta (insertar) un cliente
+    
     $sql = "INSERT INTO clientes (nombre, apellido, dni) VALUES ('$nombre', '$apellido', '$dni')";
     
     if ($conn->query($sql) === TRUE) {
@@ -50,7 +50,7 @@ function darAlta($nombre, $apellido, $dni) {
 function modificarDatos($nombre, $apellido, $dni) {
     $conn = conectarDB();
 
-    // Lógica para modificar datos de un cliente
+    
     $sql = "UPDATE clientes SET nombre='$nombre', apellido='$apellido' WHERE dni='$dni'";
     
     if ($conn->query($sql) === TRUE) {
