@@ -85,7 +85,6 @@ function loginUser($email, $password)
                         $row = mysqli_fetch_assoc($result);
                         $hash = $row['contrasenia_hash'];
                         $tipo = $row['tipo'];
-                        //
                         if (password_verify($_POST['password'], $hash)) {
                             $_SESSION["email"] = $email;
                             if ($tipo === 'cliente') {

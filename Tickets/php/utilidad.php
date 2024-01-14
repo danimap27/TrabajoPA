@@ -10,24 +10,20 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-function crearTicket($titulo, $descripcion, $prioridad, $estado, $cliente, $agente) {
+function crearTicket($titulo, $descripcion, $prioridad, $estado, $cliente, $agente){
     global $conn;
+    $sql = "INSERT INTO ticket (nombreTicket, descripcionTicket, prioridad, estado, fk_idCliente, fk_idAgente, fecha) VALUES ('$titulo', '$descripcion','$prioridad', '$estado', '$cliente', '$agente', current_timestamp())";
 
-    $prioridad = filter_var($prioridad, FILTER_VALIDATE_INT);
-    $estado = filter_var($estado, FILTER_VALIDATE_INT);
-
-    $stmt = $conn->prepare("INSERT INTO ticket (nombreTicket, descripcionTicket, prioridad, estado, fk_idCliente, fk_idAgente, fechaRegistro) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("ssiiii", $titulo, $descripcion, $prioridad, $estado, $cliente, $agente);
-
-    if ($stmt->execute()) {
-        $stmt->close();
+    if ($conn->query($sql)) { 
+        $conn->close();
         return true;
     } else {
-        echo "Error al ejecutar la consulta: " . $stmt->error;
-        $stmt->close();
+        echo "Error al ejecutar la consulta: " . $conn->error;
+        $conn->close();
         return false;
     }
 }
+
 
 function obtenerListaTickets() {
     global $conn;

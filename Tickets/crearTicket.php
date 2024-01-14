@@ -4,9 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
         $_POST['titulo'] => FILTER_SANITIZE_STRING,
         $_POST['descripcion'] => FILTER_SANITIZE_STRING,
         $_POST['prioridad'] => FILTER_SANITIZE_STRING,
-        $_POST['estado'] => FILTER_SANITIZE_STRING,
-        $_POST['cliente'] => FILTER_SANITIZE_STRING,
-        $_POST['agente'] => FILTER_SANITIZE_STRING
+        $_POST['estado'] => FILTER_SANITIZE_STRING
     );
     header("Location: crearTicket.php");
 
@@ -15,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
     if (in_array(false, $datosFiltrados, true)) {
         echo "Error en los datos del formulario.";
     } else {
-        // Verificar que todos los campos requeridos estén presentes
         $camposRequeridos = array('titulo', 'descripcion', 'prioridad', 'estado', 'cliente', 'agente');
         $errores = array();
 
@@ -38,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
                             $datosFiltrados['descripcion'],
                             $datosFiltrados['prioridad'],
                             $datosFiltrados['estado'],
-                            $datosFiltrados['cliente'],
-                            $datosFiltrados['agente']
+                            $_POST['cliente'],
+                            $_POST['agente']
                     )) {
                 echo "Ticket creado con éxito.";
             } else {
@@ -64,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
     <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
         <div id="tickets-container">
             <h1>Gesti&oacute;n de Tickets</h1>
-            <form id="ticket-form" action="indexAdmin.php" method="post">
+            <form id="ticket-form" action="crearTicket.php" method="post">
                 <label for="titulo">T&iacute;tulo:</label>
                 <input type="text" id="titulo" name="titulo" required>
 
@@ -73,16 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear-ticket"])) {
 
                 <label for="prioridad">Prioridad:</label>
                 <select id="prioridad" name="prioridad">
-                    <option value="2">Alta</option>
-                    <option value="1">Media</option>
-                    <option value="0">Baja</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
                 </select>
 
                 <label for="estado">Estado:</label>
                 <select id="estado" name="estado">
-                    <option value="2">Abierto</option>
-                    <option value="1">En progreso</option>
-                    <option value="0">Cerrado</option>
+                    <option value="Abierto">Abierto</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Cerrado">Cerrado</option>
                 </select>
 
                 <label for="cliente">Cliente:</label>
