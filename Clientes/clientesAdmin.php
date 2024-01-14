@@ -21,7 +21,7 @@ function darBaja($nombre, $apellido, $dni) {
     $conn = conectarDB();
 
     
-    $sql = "DELETE FROM clientes WHERE dni = '$dni'";
+    $sql = "DELETE FROM clientes WHERE idCliente = '$dni'";
     
     if ($conn->query($sql) === TRUE) {
         echo "Cliente dado de baja exitosamente.";
@@ -32,11 +32,11 @@ function darBaja($nombre, $apellido, $dni) {
     $conn->close();
 }
 
-function darAlta($nombre, $apellido, $dni) {
+function darAlta($nombre, $apellido, $dni, $idAgente) {
     $conn = conectarDB();
 
     
-    $sql = "INSERT INTO clientes (nombre, apellido, dni) VALUES ('$nombre', '$apellido', '$dni')";
+    $sql = "INSERT INTO clientes (idCliente, nombreCliente, apellidoCliente, id_agente) VALUES ('$dni', '$nombre', '$apellido', '$idAgente')";
     
     if ($conn->query($sql) === TRUE) {
         echo "Cliente dado de alta exitosamente.";
@@ -47,11 +47,11 @@ function darAlta($nombre, $apellido, $dni) {
     $conn->close();
 }
 
-function modificarDatos($nombre, $apellido, $dni) {
+function modificarDatos($nombre, $apellido, $id_agente) {
     $conn = conectarDB();
 
     
-    $sql = "UPDATE clientes SET nombre='$nombre', apellido='$apellido' WHERE dni='$dni'";
+    $sql = "UPDATE clientes SET nombreCliente='$nombre', apellidoCliente='$apellido' WHERE id_agente='$id_agente'";
     
     if ($conn->query($sql) === TRUE) {
         echo "Datos del cliente modificados exitosamente.";
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["opcion"])) {
         $opcion = $_POST["opcion"];
 
-        if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["dni"])) {
+        if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["dni"] && isset($_POST["idAgente"])) {
             $nombre = $_POST["nombre"];
             $apellido = $_POST["apellido"];
             $dni = $_POST["dni"];
@@ -77,11 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
 
                 case "dar_de_alta":
-                    darAlta($nombre, $apellido, $dni);
+                    darAlta($nombre, $apellido, $dni, $id_agente);
                     break;
 
                 case "modificar_datos":
-                    modificarDatos($nombre, $apellido, $dni);
+                    modificarDatos($nombre, $apellido, $id_agente);
                     break;
 
                 default:
@@ -118,6 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="dni">DNI:</label>
         <input type="text" name="dni" required>
+
+        <label for="idAgente">ID del agente asociado:</label>
+        <input type="text" name="idAgente" required>
 
         <button type="submit" name="opcion" value="dar_de_baja">Dar de baja</button>
         <button type="submit" name="opcion" value="dar_de_alta">Dar de alta</button>
