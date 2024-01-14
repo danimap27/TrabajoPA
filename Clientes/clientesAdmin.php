@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["opcion"])) {
         $opcion = $_POST["opcion"];
 
-        if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["dni"] && isset($_POST["idAgente"])) {
+        if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["dni"]) && isset($_POST["idAgente"])) {
             $nombre = $_POST["nombre"];
             $apellido = $_POST["apellido"];
             $dni = $_POST["dni"];
