@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
 
-    <h2>Seleccione una opción:</h2>
+    <h2>Seleccione una opci&oacute;n:</h2>
 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="nombre">Nombre:</label>
@@ -116,9 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="apellido">Apellido:</label>
         <input type="text" name="apellido" required>
-
-        <label for="dni">DNI:</label>
-        <input type="text" name="dni" required>
 
         <label for="idAgente">ID del agente asociado:</label>
         <input type="text" name="idAgente" required>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-01-2024 a las 18:22:24
+-- Tiempo de generación: 15-01-2024 a las 10:37:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,9 +40,9 @@ CREATE TABLE `agente` (
 --
 
 INSERT INTO `agente` (`idAgente`, `nombreAgente`, `apellidosAgente`) VALUES
-(1, 'Pepe', 'Pepito'),
-(2, 'Juan', 'Gome'),
-(3, 'Sergio', 'Ramos');
+(2, 'agenteuno', 'agente uno'),
+(3, 'agentedos', 'agente dos'),
+(4, 'agentetres', 'agente tres');
 
 -- --------------------------------------------------------
 
@@ -62,8 +62,9 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `id_agente`) VALUES
-(1, 'Edu', 'Jimene', NULL),
-(4, 'Edu', 'Jimene', NULL);
+(4, 'clienteuno', 'cliente uno', 2),
+(5, 'clientedos', 'cliente dos', 3),
+(6, 'clientetres', 'cliente tres', 4);
 
 -- --------------------------------------------------------
 
@@ -75,12 +76,20 @@ CREATE TABLE `ticket` (
   `idTicket` int(5) NOT NULL,
   `nombreTicket` varchar(50) NOT NULL,
   `descripcionTicket` text NOT NULL,
-  `prioridad` int(11) NOT NULL,
-  `estado` int(11) NOT NULL,
+  `prioridad` text NOT NULL,
+  `estado` text NOT NULL,
   `fk_idCliente` int(8) NOT NULL,
-  `fk_idAgente` int(8) NOT NULL,
   `fechaRegistro` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ticket`
+--
+
+INSERT INTO `ticket` (`idTicket`, `nombreTicket`, `descripcionTicket`, `prioridad`, `estado`, `fk_idCliente`, `fechaRegistro`) VALUES
+(16, 'Ticket de Ejemplo 1', 'Descripción del Ticket 1', 'Alta', 'Abierto', 4, '2024-01-15'),
+(17, 'Ticket de Ejemplo 2', 'Descripción del Ticket 2', 'Media', 'En Proceso', 5, '2024-01-16'),
+(18, 'Ticket de Ejemplo 3', 'Descripción del Ticket 3', 'Baja', 'Cerrado', 6, '2024-01-17');
 
 -- --------------------------------------------------------
 
@@ -101,8 +110,13 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `correo`, `contrasenia_hash`, `tipo`, `idCorrespondiente`) VALUES
-(1, 'admin@admin.com', 'admin', 'administrador', NULL),
-(7, 'cliente@cliente.com', '$2y$10$soTdBZqjEYZgC5MdxDff0.4Obd4rQVsgHxZNeT8CndGkPJzUsfrpS', 'cliente', 1);
+(18, 'admin@admin.com', '$2y$10$8CHjng9PJVWtE2/0UWgcVudDLey8mVoafhnys0YK7lPU0WwMsHEeG', 'administrador', NULL),
+(21, 'agente1@agente.com', '$2y$10$ZnPMOUZSXamw7Fgd15QfAu.2Q9/N.ejZWkRP.4axq6LmX5SpakuJa', 'agente', NULL),
+(22, 'agente2@agente.com', '$2y$10$WTgL3NP8V6Lntk6JyCZVZe1xCA5q5o78k9rTEFapQQPO/LERzWK06', 'agente', NULL),
+(23, 'agente3@agente.com', '$2y$10$Ht.PzWiyUI5u/XQSmeMk5uuqFHc2KNCcnq8WdopZw3FTOpJ/18GPW', 'agente', NULL),
+(24, 'cliente1@cliente.com', '$2y$10$Y6Vlr2wpFZ.14a7vDeTYQOd2CtYsm3UxfQwXqpt.4E9R72bhfs8dy', 'cliente', NULL),
+(25, 'cliente2@cliente.com', '$2y$10$pvFtaCDPYUZTtifCfxYSe.Rk/eMIyWMWo0pI0.WOdfpwVVH0d1eVW', 'cliente', NULL),
+(26, 'cliente3@cliente.com', '$2y$10$pPEzJRrbA91YBXIfhKSbROfqChsIsiK2tsWjKS/8n5atExq4v9Rtm', 'cliente', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -126,7 +140,6 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`idTicket`),
-  ADD KEY `fk_agente` (`fk_idAgente`),
   ADD KEY `fk_usuario` (`fk_idCliente`);
 
 --
@@ -134,7 +147,7 @@ ALTER TABLE `ticket`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`),
-  ADD KEY `idCorrespondiente` (`idCorrespondiente`);
+  ADD UNIQUE KEY `idCorrespondiente` (`idCorrespondiente`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -144,7 +157,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `agente`
 --
 ALTER TABLE `agente`
-  MODIFY `idAgente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idAgente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -156,7 +169,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `idTicket` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTicket` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -172,7 +185,6 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `fk_agente` FOREIGN KEY (`fk_idAgente`) REFERENCES `agente` (`idAgente`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`fk_idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
