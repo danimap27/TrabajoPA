@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="clientesAdmin.css">
     <script type="text/javascript" src="validaciones.js"></script>
 </head>
-<body>
+<body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
 
     <h2>Seleccione una opción:</h2>
 
