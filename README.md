@@ -4,7 +4,7 @@ Puedes encontrar el código fuente en [GitHub](https://github.com/danimap27/Trab
 
 ## Introducción
 
-Este proyecto de Sistema de Tickets de Soporte es desarrollado por Daniel Martín Pérez y Pablo Vilchez Rivas. La aplicación tiene como objetivo ofrecer a las empresas una herramienta integral para gestionar eficientemente las solicitudes y problemas de los clientes, mejorando así la experiencia del cliente y la eficiencia operativa.
+Este proyecto de Sistema de Tickets de Soporte está desarrollado por Daniel Martín Pérez y Pablo Vilchez Rivas. La aplicación tiene como objetivo ofrecer a las empresas una herramienta integral para gestionar eficientemente las solicitudes y problemas de los clientes, mejorando así la experiencia del cliente y la eficiencia operativa.
 
 ## Usuarios de Prueba
 
@@ -23,7 +23,12 @@ El punto de inicio del proyecto se encuentra en la página de inicio de sesión 
 | Administradores  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Leer, Crear, Actualizar, Eliminar) |
 
 ---
+## Funciones que nos hubieran gustado hacer
+- Ordenar y agrupar los objetos de las entidades con javascript.
+- Tener otra entidad que sea departamentos para separar los distintos tipos de incidencias.
+- Que se pueda añadir clientes y agentes a la base de datos de usuarios y a las suyas.
 
+---
 ## Extras
 - Realizacion de 3 entidades entre dos personas.
 - Uso de markdown para la documentacion.
@@ -34,10 +39,15 @@ El punto de inicio del proyecto se encuentra en la página de inicio de sesión 
 
 El repositorio está estructurado de la siguiente manera:
 
+
+-`Admin/`: Contiene un archivo html para la redirecion del usuario admin.
 - `login/`: Contiene los archivos relacionados con el inicio de sesión.
 - `tickets/`: Incluye los archivos para la gestión de tickets.
 - `agentes/`: Contiene archivos específicos para la administración de agentes.
 - `clientes/`: Archivos relacionados con la gestión de clientes.
+- `logins.txt`: Archivo donde estan los usuarios y contraseñas de los usuarios de ejemplos
+- `README.md`: Este archivo donde se encuentra la documentacion del trabajo
+- `sis_gest_tick_sop.sql`: Archivo para importar la BBDD.
 
 ---
 # Descripción de Uso del Sistema
