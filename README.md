@@ -13,7 +13,14 @@ Se proporciona un archivo llamado `login.txt` que contiene información sobre us
 El punto de inicio del proyecto se encuentra en la página de inicio de sesión (`login/login.php`). Desde esta página, los usuarios pueden acceder al sistema utilizando sus credenciales.
 
 ---
+## Matriz CRUD
+| Rol              | Clientes                                    | Agentes                                      | Administradores                              |
+|------------------|---------------------------------------------|----------------------------------------------|-----------------------------------------------|
+| Clientes         | CRUD (Listar y Actualizar Propia Info)      | No aplica                                    | No aplica                                     |
+| Agentes          | CRUD (Listar y Actualizar Propia Info)      | CRUD (Listar y Actualizar Propia Info)      | CRUD (Listar, Leer, Crear, Actualizar, Eliminar) |
+| Administradores  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Leer, Crear, Actualizar, Eliminar) |
 
+---
 ## Contenido del Repositorio
 
 El repositorio está estructurado de la siguiente manera:
