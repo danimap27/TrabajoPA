@@ -1,5 +1,7 @@
 # Sistema de Tickets de Soporte
 
+Puedes encontrar el código fuente en [GitHub](https://github.com/danimap27/TrabajoPA).
+
 ## Introducción
 
 Este proyecto de Sistema de Tickets de Soporte es desarrollado por Daniel Martín Pérez y Pablo Vilchez Rivas. La aplicación tiene como objetivo ofrecer a las empresas una herramienta integral para gestionar eficientemente las solicitudes y problemas de los clientes, mejorando así la experiencia del cliente y la eficiencia operativa.
