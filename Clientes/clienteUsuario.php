@@ -6,7 +6,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="clientecss.css">
 </head>
-<body>
+<body style="background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');">
 
 <?php
 // Incluye el archivo de funciones
