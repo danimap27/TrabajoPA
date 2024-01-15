@@ -1,0 +1,125 @@
+    body {
+        background-image: url('https://cdn.wallpapersafari.com/71/50/AQRksF.jpg');
+
+        background-size: cover;
+        background-position: center;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+    }
+
+    #editar-agente-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+    }
+
+    h1 {
+        color: #007BFF;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        border-color: #007BFF;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #volver-button {
+        background-color: #dc3545;
+        margin-top: 10px;
+    }
+
+    #volver-button:hover {
+        background-color: #c82333;
+    }
+
+
+    @media screen and (max-width: 600px) {
+        #editar-agente-container {
+            padding: 10px;
+        }
+
+        #editar-agente-form {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            padding: 8px;
+            margin: 5px 0 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+        }
+    }
+
+    @media screen and (min-width: 601px) and (max-width: 1024px) {
+        #editar-agente-container {
+            padding: 15px;
+        }
+
+        #editar-agente-form {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            padding: 8px;
+            margin: 5px 0 10px;
+        }
+
+        button {
+            padding: 12px 18px;
+        }
+    }
+
+    @media screen and (min-width: 1025px) {
+        #editar-agente-container {
+            max-width: 1000px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            font-size: 16px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+    }
