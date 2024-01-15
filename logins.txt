@@ -1,0 +1,7 @@
+admin@admin.com adminadmin
+agente1@agente.com agente1
+agente2@agente.com agente2
+agente3@agente.com agente3
+cliente1@cliente.com cliente1
+cliente2@cliente.com cliente2
+cliente3@cliente.com cliente3

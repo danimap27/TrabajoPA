@@ -9,12 +9,9 @@
 <body>
 
 <?php
-// Incluye el archivo de funciones
 include('Tickets/php/utilidad.php');
 
-// Verifica si se hizo clic en el botón
 if (isset($_POST['obtener_tickets'])) {
-    // Ejecuta la función al hacer clic en el botón
     $tickets = obtenerListaTickets();
     echo '<h2>Lista de Tickets:</h2>';
     echo '<ul>';

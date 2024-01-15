@@ -19,7 +19,7 @@ $agentes = obtenerListaAgentes();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración de Agentes</title>
+    <title>Administraci&oacute;n de Agentes</title>
     <link rel="stylesheet" href="agentes.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,7 +30,7 @@ $agentes = obtenerListaAgentes();
 
 <body>
     <div id="agentes-container">
-        <h1>Administración de Agentes</h1>
+        <h1>Administraci&oacute;n de Agentes</h1>
 
         <?php
         $listaAgentes = obtenerListaAgentes();
@@ -41,7 +41,7 @@ $agentes = obtenerListaAgentes();
             echo '<tr>';
             echo '<th>Nombre</th>';
             echo '<th>Apellido</th>';
-            echo '<th>Correo Electrónico</th>';
+            echo '<th>Correo Electronico</th>';
             echo '<th>Acciones</th>';
             echo '</tr>';
             echo '</thead>';
@@ -57,7 +57,10 @@ $agentes = obtenerListaAgentes();
                 <input type="hidden" name="idAgente" value="' . $agente['idAgente'] . '";>
                 <button class="edit-button" type="submit">Editar</button>
             </form>';
+                echo '<form method="post" action="">';
+                echo '<input type="hidden" name="idAgente" value="' . $agente['idAgente'] . '">';
                 echo '<button class="delete-button" type="submit" name="eliminar-agente">Eliminar</button>';
+                echo '</form>';
                 echo '</td>';
                 echo '</tr>';
             }

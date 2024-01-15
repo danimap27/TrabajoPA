@@ -44,8 +44,7 @@ function registerUser($email, $password, $userType, $firstName, $lastName)
 
             if ($conn->query($sql)) {
                 //$lastInsertedId = $conn->insert_id;
-                $lastInsertedId = 1;
-                $sql = "INSERT INTO usuario (correo, contrasenia_hash, tipo, idCorrespondiente) VALUES ('$email', '$hashedPassword', '$userType', '$lastInsertedId')";
+                $sql = "INSERT INTO usuario (correo, contrasenia_hash, tipo) VALUES ('$email', '$hashedPassword', '$userType')";
                 $conn->query($sql);
                 $error[] = '<p style="color: green; font-weight: bold">Usuario registrado correctamente.</p>';
             } else {
@@ -88,13 +87,13 @@ function loginUser($email, $password)
                         if (password_verify($_POST['password'], $hash)) {
                             $_SESSION["email"] = $email;
                             if ($tipo === 'cliente') {
-                                header("Location: ../Tickets/index.php");
+                                header("Location: ../Clientes/clienteUsuario.php");
                             } elseif ($tipo === 'agente') {
-                                header("Location: ../Agente/index.php");
+                                header("Location: ../Agentes/index.php");
                             } elseif ($tipo === 'administrador') {
-                                header("Location: ../Admin/index.php");
+                                header("Location: ../Admin/adminIndex.html");
                             } else {
-                                header("Location: ../Tickets/index.php");
+                                header("Location: ../login/signup.php");
                             }
                             exit();
                         } else {

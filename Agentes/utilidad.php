@@ -29,12 +29,23 @@ function eliminarAgente($idAgente)
 
     $sql = "DELETE FROM agente WHERE idAgente = $idAgente";
     $result = $conn->query($sql);
-    $sql = "DELETE FROM usuario WHERE idCorrespondiente = $idAgente";
-    $result = $conn->query($sql);
+
+    if ($result) {
+        $sqlUsuario = "DELETE FROM usuario WHERE idCorrespondiente = $idAgente";
+        $resultUsuario = $conn->query($sqlUsuario);
+
+        if (!$resultUsuario) {
+            echo "Error al eliminar el usuario: " . $conn->error;
+        }
+    } else {
+        echo "Error al eliminar el agente: " . $conn->error;
+    }
+
     $conn->close();
 
-    return $result;
+    return $result && $resultUsuario;
 }
+
 function obtenerDatosAgentePorId($idAgente) {
     $conn = connectToDatabase();
 
@@ -74,4 +85,79 @@ function actualizarDatosAgente($idAgente, $nombre, $apellido, $correo) {
     }
 }
 
+function obtenerIdAgenteDesdeSesion() {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_SESSION['correo'])) {
+        $correoAgente = $_SESSION['correo'];
+
+        $idAgente = obtenerIdAgenteDesdeCorreo($correoAgente);
+
+        return $idAgente;
+    }
+    return null;
+}
+
+function obtenerIdAgenteDesdeCorreo($correoAgente) {
+    $conn = connectToDatabase();
+
+    $sql = "SELECT idAgente FROM agente WHERE correo = '$correoAgente'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $idAgente = $row['idAgente'];
+        return $idAgente;
+    }
+
+    return null;
+}
+
+function obtenerClientesDeAgente($agenteId) {
+    $conn = connectToDatabase();
+
+    $sql = "SELECT * FROM cliente WHERE id_agente = $agenteId";
+    $result = $conn->query($sql);
+
+    $clientes = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $clientes[] = $row;
+        }
+    }
+
+    $conn->close();
+    return $clientes;
+}
+
+function obtenerTicketsDeCliente($clienteId) {
+    $conn = connectToDatabase();
+
+    $sql = "SELECT * FROM ticket WHERE fk_idCliente = $clienteId";
+    $result = $conn->query($sql);
+
+    $tickets = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tickets[] = $row;
+        }
+    }
+
+    $conn->close();
+    return $tickets;
+}
+
+function actualizarPrioridadYEstado($ticketId, $prioridad, $estado) {
+    $conn = connectToDatabase();
+
+    $sql = "UPDATE ticket SET prioridad = '$prioridad', estado = '$estado' WHERE idTicket = $ticketId";
+    $result = $conn->query($sql);
+
+    $conn->close();
+    return $result;
+}
 ?>
