@@ -104,6 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Opciones</title>
     <link rel="stylesheet" type="text/css" href="clientesAdmin.css">
+    <script type="text/javascript" src="validaciones.js"></script>
 </head>
 <body>
 
