@@ -21,6 +21,13 @@ El punto de inicio del proyecto se encuentra en la página de inicio de sesión 
 | Administradores  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Crear, Actualizar, Eliminar)  | CRUD (Listar, Leer, Crear, Actualizar, Eliminar) |
 
 ---
+
+## Extras
+- Realizacion de 3 entidades entre dos personas.
+- Uso de markdown para la documentacion.
+- Css responsive y muchas reglas de CSS
+
+---
 ## Contenido del Repositorio
 
 El repositorio está estructurado de la siguiente manera:
